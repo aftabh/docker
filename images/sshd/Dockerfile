@@ -35,10 +35,12 @@ RUN adduser --disabled-password -gecos '' --shell /bin/bash $ADMIN && \
     supervisor && \
 \
   mkdir -p /var/run/sshd && \
-  mkdir -p /var/log/supervisor
-
-RUN apt-get install -y sudo && \
-  chmod 440 /etc/sudoers
+  mkdir -p /var/log/supervisor && \
+\
+  apt-get install -y sudo && \
+    chmod 440 /etc/sudoers && \
+\
+  locale-gen en_US.UTF-8
 
 COPY config/sudoers /etc/sudoers
 COPY config/supervisor.conf /etc/supervisor/conf.d/sshd.conf
