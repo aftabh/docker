@@ -38,21 +38,22 @@ RUN adduser --disabled-password -gecos '' --shell /bin/bash $ADMIN && \
   mkdir -p /var/log/supervisor && \
 \
   apt-get install -y sudo && \
-    chmod 440 /etc/sudoers && \
-\
-  locale-gen en_US.UTF-8
+    chmod 440 /etc/sudoers
 
 COPY config/sudoers /etc/sudoers
 COPY config/supervisor.conf /etc/supervisor/conf.d/sshd.conf
 
+RUN apt-get update && apt-get install -y \
+  locales && \
+\
+  locale-gen en_US.UTF-8
+
 #
 # volume
 #
-VOLUME ["/home/$ADMIN/.ssh", "/admin", "/workspace"]
-
+VOLUME ["/home/$ADMIN/.ssh", "/workspace"]
 
 #
-# entry-point
+# run container
 #
-
-# ENTRYPOINT ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord"]
