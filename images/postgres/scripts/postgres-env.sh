@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PG_ADMIN=__PG_ADMIN__
+PG_HOME=__PG_HOME__
+PG_LOGS=__PG_LOGS__
+
+PG_VERSION=__PG_VERSION__
+PG_INSTALL_DIR=/usr/lib/postgresql/${PG_VERSION}
+PG_DATA_DIR=$PG_HOME
