@@ -26,3 +26,8 @@ RUN sed \
   chmod 555 /opt/nodejs.sh && \
 \
   sudo -H -u $ADMIN /opt/nodejs.sh
+
+#
+# run container
+#
+CMD ["/usr/bin/supervisord"]

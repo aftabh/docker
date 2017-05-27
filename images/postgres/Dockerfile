@@ -64,4 +64,4 @@ VOLUME ["/home/$ADMIN/.ssh", "/workspace", "$PG_HOME", "$PG_LOGS"]
 #
 # run container
 #
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord"]

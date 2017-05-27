@@ -56,4 +56,4 @@ VOLUME ["/home/$ADMIN/.ssh", "/workspace"]
 #
 # run container
 #
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord"]
