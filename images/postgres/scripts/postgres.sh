@@ -50,22 +50,27 @@ db_config() {
 }
 
 db_create() {
+    if [[ -z $PG_DATABASE && -z $PG_USER ]]; then
+        echo 'Not creating any postgres database or user.'
+        return
+    fi
+
     echo 'Creating postgres database and user ...'
 
     sudo -u $PG_ADMIN $PG_INSTALL_DIR/bin/pg_ctl -D $PG_DATA_DIR start
-
     sleep 5
 
     if [[ ! -z $PG_DATABASE ]]; then
+        echo "Creating postgres database: $PG_DATABASE ..."
         sudo -u $PG_ADMIN $PG_INSTALL_DIR/bin/createdb $PG_DATABASE
     fi
 
     if [[ ! -z $PG_USER ]]; then
+        echo "Creating postgres user: $PG_USER ..."
         sudo -u $PG_ADMIN $PG_INSTALL_DIR/bin/createuser $PG_USER
     fi
 
     sudo -u $PG_ADMIN $PG_INSTALL_DIR/bin/pg_ctl stop -D $PG_DATA_DIR
-
     echo 'Done.'
 }
 
