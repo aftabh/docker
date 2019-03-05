@@ -1,23 +1,27 @@
-FROM ubuntu/sshd:16.04
+FROM ubuntu/sshd:18.04
 
 MAINTAINER aftabh
 
 #
 # environment variable
 #
-ENV \
-  ADMIN=admin \
-\
-  REPO_SRC='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' \
-  SOURCE_PATH='/etc/apt/sources.list.d/postgres.list' \
-\
-  PG_VERSION='9.6' \
-  PG_ADMIN='postgres'
+ENV ADMIN=admin \
+REPO_SRC='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' \
+PG_VERSION='9.6' \
+DB_PATH='/workspace/data/postgres' \
+SOURCE_PATH='/etc/apt/sources.list.d/postgres.list' \
+DB_LOGS='/workspace/logs/postgres' \
+DEBIAN_FRONTEND=noninteractive
 
 ENV \
   PG_HOME="/workspace/data/postgres/${PG_VERSION}" \
   PG_LOGS="/workspace/logs/postgres/${PG_VERSION}" \
   LANG='en_US.utf8'
+
+RUN apt-get install -y tzdata && \
+  ln -fs /usr/share/zoneinfo/America/Toronto /etc/localtime && \
+  dpkg-reconfigure --frontend noninteractive tzdata && \
+  date
 
 #
 # provision

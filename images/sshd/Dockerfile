@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 MAINTAINER aftabh
 
@@ -27,7 +27,6 @@ RUN adduser --disabled-password -gecos '' --shell /bin/bash $ADMIN && \
     locate \
     net-tools \
     netcat \
-    python-software-properties \
     software-properties-common \
     vim \
     wget \
@@ -39,6 +38,9 @@ RUN adduser --disabled-password -gecos '' --shell /bin/bash $ADMIN && \
 \
   apt-get install -y sudo && \
     chmod 440 /etc/sudoers
+
+RUN apt-get install -y locales && \
+  locale-gen en_US.UTF-8
 
 COPY config/sudoers /etc/sudoers
 COPY config/supervisor.conf /etc/supervisor/conf.d/sshd.conf
@@ -56,4 +58,5 @@ VOLUME ["/home/$ADMIN/.ssh", "/workspace"]
 #
 # run container
 #
+
 ENTRYPOINT ["/usr/bin/supervisord"]
